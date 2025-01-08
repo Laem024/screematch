@@ -1,10 +1,9 @@
 package com.aluracursos.screenmatch.model;
 
-import com.aluracursos.screenmatch.service.ConsultaChatGPT;
+//import com.aluracursos.screenmatch.service.ConsultaChatGPT;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalDouble;
 
 @Entity

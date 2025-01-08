@@ -6,16 +6,15 @@ import com.aluracursos.screenmatch.service.ConsumoAPI;
 import com.aluracursos.screenmatch.service.ConvierteDatos;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Principal {
-    private Scanner teclado = new Scanner(System.in);
-    private ConsumoAPI consumoApi = new ConsumoAPI();
+    private final Scanner teclado = new Scanner(System.in);
+    private final ConsumoAPI consumoApi = new ConsumoAPI();
     private final String URL_BASE = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=3ffd9a0a";
-    private ConvierteDatos conversor = new ConvierteDatos();
-    private  List<DatosSerie> datosSeries = new ArrayList<>();
-    private SerieRepository repository;
+    private final ConvierteDatos conversor = new ConvierteDatos();
+    private final List<DatosSerie> datosSeries = new ArrayList<>();
+    private final SerieRepository repository;
     private List<Serie> series;
     private Optional<Serie> serieBuscada;
 
@@ -28,13 +27,13 @@ public class Principal {
         var opcion = -1;
         while (opcion != 0) {
             var menu = """
-                    1 - Buscar series 
+                    1 - Buscar series
                     2 - Buscar episodios
                     3 - Mostrar series buscadas
-                    4 - Buscar serie por titulo  
-                    5 - Buscar top 5 mejores series   
-                    6 - Buscar series por categoria     
-                    7 - Filtrar series por cantidad de temporadas y evaluacion    
+                    4 - Buscar serie por titulo
+                    5 - Buscar top 5 mejores series
+                    6 - Buscar series por categoria
+                    7 - Filtrar series por cantidad de temporadas y evaluacion
                     8 - Buscar episodios por titulo
                     9 - Top 5 episodios por serie
                     0 - Salir
@@ -86,8 +85,7 @@ public class Principal {
         var nombreSerie = teclado.nextLine();
         var json = consumoApi.obtenerDatos(URL_BASE + nombreSerie.replace(" ", "+") + API_KEY);
         System.out.println(json);
-        DatosSerie datos = conversor.obtenerDatos(json, DatosSerie.class);
-        return datos;
+        return conversor.obtenerDatos(json, DatosSerie.class);
     }
     private void buscarEpisodioPorSerie() {
         //DatosSerie datosSerie = getDatosSerie();
@@ -130,10 +128,12 @@ public class Principal {
     }
 
     private void mostrarSeriesBuscadas() {
-//        List<Serie> series = new ArrayList<>();
-//        series = datosSeries.stream()
-//                .map(Serie::new)
-//                .toList();
+/*
+        List<Serie> series = new ArrayList<>();
+        series = datosSeries.stream()
+                .map(Serie::new)
+                .toList();
+*/
 
         series = repository.findAll();
 
@@ -184,7 +184,7 @@ public class Principal {
         System.out.println("*** Series filtradas ***");
         serieFiltradas.forEach(s -> System.out.println(s.getTitulo() + " - Evaluacion: " + s.getEvaluacion()));
 
-        //utilzando consultas manuales (native Querys)
+        //utilizando consultas manuales (native Query)
         serieFiltradas = repository.seriesPorTemporadasYEvaluacion(temporadas, evaluacion);
         System.out.println("*** Series filtradas ***");
         serieFiltradas.forEach(s -> System.out.println(s.getTitulo() + " - Evaluacion: " + s.getEvaluacion()));
