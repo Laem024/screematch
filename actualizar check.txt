@@ -1,0 +1,4 @@
+ALTER TABLE series DROP CONSTRAINT series_genero_check;
+
+ALTER TABLE series ADD CONSTRAINT series_genero_check
+CHECK ((genero)::text = ANY (ARRAY['ACCION', 'ROMANCE', 'COMEDIA', 'DRAMA', 'CRIMEN', 'ANIMACION', 'MUSICAL']));
